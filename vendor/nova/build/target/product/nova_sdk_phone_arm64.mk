@@ -5,5 +5,4 @@ $(call inherit-product, device/generic/goldfish/64bitonly/product/sdk_phone64_ar
 $(call inherit-product, vendor/nova/build/target/product/nova_common.mk)
 
 PRODUCT_NAME := nova_sdk_phone_arm64
-PRODUCT_DEVICE := generic_arm64
 PRODUCT_MODEL := NovaDroid SDK (ARM64)
