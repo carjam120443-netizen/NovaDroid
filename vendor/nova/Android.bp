@@ -1,0 +1,2 @@
+// NovaDroid-owned Android build modules live under this namespace.
+soong_namespace {}
