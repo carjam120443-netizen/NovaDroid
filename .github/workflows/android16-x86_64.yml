@@ -1,0 +1,55 @@
+name: Android 16 x86_64 baseline
+
+on:
+  workflow_dispatch:
+    inputs:
+      lunch_target:
+        description: AOSP x86_64 Cuttlefish lunch target
+        required: true
+        default: aosp_cf_x86_64_only_phone-aosp_current-userdebug
+
+permissions:
+  contents: read
+
+jobs:
+  build-android16:
+    # AOSP builds are too large for ordinary GitHub-hosted runners.
+    # Configure a dedicated Linux self-hosted runner with ample RAM and disk.
+    runs-on: [self-hosted, linux, x64, android-build]
+    timeout-minutes: 720
+    env:
+      AOSP_TAG: android-16.0.0_r4
+      LUNCH_TARGET: ${{ inputs.lunch_target }}
+      SYNC_JOBS: 8
+      BUILD_JOBS: 16
+      AOSP_DIR: ${{ runner.temp }}/novadroid-aosp16
+    steps:
+      - name: Check out NovaDroid build scripts
+        uses: actions/checkout@v4
+
+      - name: Check build host
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(uname -s)" = Linux
+          command -v repo
+          command -v git
+          command -v python3
+          free -h
+          df -h "$RUNNER_TEMP"
+
+      - name: Sync and build Android 16 x86_64 Cuttlefish images
+        shell: bash
+        run: bash tools/build-android16-x86_64.sh
+
+      - name: Upload Android build outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: novadroid-android16-x86_64-cuttlefish
+          if-no-files-found: error
+          path: |
+            ${{ runner.temp }}/novadroid-aosp16/out/target/product/vsoc_x86_64/*.img
+            ${{ runner.temp }}/novadroid-aosp16/out/target/product/vsoc_x86_64/*.zip
+            ${{ runner.temp }}/novadroid-aosp16/out/target/product/vsoc_x86_64/*.json
+            ${{ runner.temp }}/novadroid-aosp16/out/dist/**
+          retention-days: 7
