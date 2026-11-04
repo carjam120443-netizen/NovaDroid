@@ -1,35 +1,38 @@
 # NovaDroid
 
-A custom Android-based operating system project focused first on booting Android on x86_64 PCs and virtual machines.
+A custom Android-based operating system project focused first on x86_64 PC and virtual-machine development.
 
 ## Project information
 
 - Version: 0.1.0
-- Foundation: AOSP and the Android-Generic PC build ecosystem
-- Initial target: x86_64 PC / VirtualBox ISO
-- Interface: Stock Android-inspired, with NovaDroid branding
-- Status: Early development; ISO build pipeline not yet integrated or tested
+- Android baseline: Android 16
+- Initial build architecture: x86_64
+- Current automated target: AOSP Cuttlefish emulator images
+- Intended PC target: bootable ISO for VirtualBox, pending a compatible Android 16 PC port
+- Status: Android 16 baseline workflow scaffold added; build not yet run
 
-## PC edition
+## Android 16 build
 
-The first release target is a bootable x86_64 ISO for testing in VirtualBox. The project will use an Android-for-PC source/build base rather than assuming a standard ARM phone product can produce a PC ISO. See [`docs/PC-ISO.md`](docs/PC-ISO.md) for the plan and current limitations.
+The repository includes a manual GitHub Actions workflow and build script for an Android 16 x86_64 Cuttlefish baseline. See [`docs/ANDROID-16-BOOTSTRAP.md`](docs/ANDROID-16-BOOTSTRAP.md). It requires a suitably sized self-hosted Linux runner.
+
+**Important:** Cuttlefish emulator images are not a PC-bootable ISO. A separate Android 16 PC kernel/device/boot integration is required before NovaDroid can produce the VirtualBox ISO we ultimately want.
 
 ## Existing ARM64 work
 
-The `vendor/nova/` directory also contains an experimental AOSP Goldfish ARM64 emulator product scaffold. It is separate from the initial PC ISO target and is not currently a complete or tested build.
+The `vendor/nova/` directory also contains an experimental AOSP Goldfish ARM64 emulator product scaffold. It is separate from the x86_64 Android 16 baseline.
 
 ## Goals
 
-- Produce a bootable x86_64 NovaDroid ISO
-- Test boot and basic input/display support in VirtualBox
+- Build and validate an Android 16 x86_64 baseline
+- Integrate a compatible Android 16 PC boot stack
+- Produce and test a bootable NovaDroid ISO in VirtualBox
 - Add NovaDroid branding, wallpapers, and startup animation
-- Customize the launcher and selected system defaults
+- Customize launcher defaults and selected system settings
 - Keep project-owned changes separate from upstream Android source
-- Explore ARM64 and physical-device support as later projects
 
-## Important status
+## Current status
 
-No NovaDroid ISO has been built yet. This repository does not contain a complete Android source checkout, compiled system image, or installer. A successful build and VirtualBox boot test are required before calling an ISO usable.
+No NovaDroid ISO has been built yet. The workflow is scaffolding for a baseline emulator build, not an ISO builder. The repository does not contain a complete Android source checkout or compiled release image.
 
 ## Disclaimer
 
