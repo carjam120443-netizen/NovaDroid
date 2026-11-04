@@ -1,0 +1,27 @@
+# Local editor and operating-system files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+*.p12
+
+# Android / Gradle outputs
+.gradle/
+build/
+out/
+*.apk
+*.aab
+*.img
+*.zip
+
+# AOSP checkout and build output (keep outside this repository)
+aosp/
+android-source/
